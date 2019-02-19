@@ -1,0 +1,5 @@
+scrapy
+schedule
+mysql-connector-python
+mysqlclient
+
