@@ -20,6 +20,7 @@ services:
       - ./parser:/parser
   web:
     build: code
+    restart: always
     links:
       - db
     depends_on:
