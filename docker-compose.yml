@@ -12,9 +12,9 @@ services:
   parser:
     build:
       ./parser
-    links:
-      - db
     depends_on:
+      - db
+    links:
       - db
     volumes:
       - ./parser:/parser
