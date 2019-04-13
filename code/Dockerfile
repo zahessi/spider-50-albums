@@ -9,8 +9,12 @@ RUN set -e; \
                 musl-dev \
                 libffi-dev \
                 openssl-dev;
+
+
+COPY requirements.txt /
+RUN pip install -r /requirements.txt
+
 EXPOSE 8443
-ADD . /code
+COPY . /code
 WORKDIR /code
-RUN pip install -r requirements.txt
 CMD ["python", "main.py"]
