@@ -42,6 +42,6 @@ class LatestReviewsSpider(scrapy.Spider):
                 raise scrapy.exceptions.CloseSpider(reason="No new records")
 
         self.page_number += 1
-        # if response.status != 404:
-        if self.page_number < 100:
+
+        if self.page_number < 5:
             yield scrapy.Request(self.base_url + str(self.page_number), callback=self.parse)
