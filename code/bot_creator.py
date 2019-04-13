@@ -21,6 +21,6 @@ class BotCreator(Updater):
         self.logger.warning('Update "%s" caused error "%s"', update, error)
 
     def config_handlers(self, handler):
-        for name, function in handler.get_functions():
+        for name, function in handler._get_functions():
             self.dp.add_handler(CommandHandler(name, function))
         self.dp.add_error_handler(self._error_handler)

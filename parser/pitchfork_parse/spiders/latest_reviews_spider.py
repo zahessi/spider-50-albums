@@ -11,21 +11,17 @@ class LatestReviewsSpider(scrapy.Spider):
     page_number = 1
 
     def parse(self, response):
-        reviews = response.xpath('//div[@class="review"]')
-        if_reviews_modified = False
-
-        if self.page_number == 1:
-            found_record_id = len(reviews)
-            records_pictures = response.xpath('//div[@class="review__artwork artwork"]/div/img/@src').getall()
-            db = DBconnector(config=self.settings.get("DB_CONFIG"))
-            for i, pic in enumerate(records_pictures, 1):
-                if db.select_record_by_picture(pic):
-                    found_record_id = -i
-                    if_reviews_modified = True
-            reviews = reviews[:found_record_id]
+        db = DBconnector(config=self.settings.get("DB_CONFIG"))
+        reviews: list = response.xpath('//div[@class="review"]')
+        found_records = False
 
         for part in reviews:
             image_link = part.xpath('.//div[@class="review__artwork artwork"]/div/img/@src').get()
+            if self.page_number == 1:
+                if db.select_record_by_picture(image_link):
+                    found_records = True
+                    continue
+
             artist = part.xpath('.//ul[@class="artist-list review__title-artist"]/li/text()').get()
             album = part.xpath('.//h2[@class="review__title-album"]/text()').get()
             review_link = "https://" + self.allowed_domains[0] + part.xpath('.//a[@class="review__link"]/@href').get()
@@ -34,12 +30,12 @@ class LatestReviewsSpider(scrapy.Spider):
 
             yield Data(artist=artist, album=album, review_url=review_link, picture_url=image_link,
                        tags=["latest"], custom={
-                                                "date": date,
-                                                "genres": genres
-                                            })
+                    "date": date,
+                    "genres": genres
+                })
         else:
-            if if_reviews_modified:
-                raise scrapy.exceptions.CloseSpider(reason="No new records")
+            if found_records:
+                raise scrapy.exceptions.CloseSpider(reason="All scraped")
 
         self.page_number += 1
 
