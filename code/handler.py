@@ -15,6 +15,7 @@ def process_album(func):
         model = func(*args)
         update.message.reply_text(text=self.formatter.create_message_for_album(model),
                                   parse_mode=telegram.ParseMode.MARKDOWN)
+
     return wrapper
 
 
@@ -48,7 +49,7 @@ class Handler:
         self._get_random_by_tag(update, "50_2018")
 
     def pure_random(self, bot, update):
-        """select purely random album from pitchfork"""
+        """select purely random album from Pitchfork"""
         self._get_pure_random(update)
 
     @process_album
@@ -58,9 +59,3 @@ class Handler:
     @process_album
     def _get_pure_random(self, update):
         return self.db.select_pure_random()
-
-    # def _get_album(self, update, tag):
-    #     self.logger.info(f"User {update.message.chat_id} requested '/{inspect.stack()[1].function}'")
-    #     model =
-    #     update.message.reply_text(text=self.formatter.create_message_for_album(model),
-    #                               parse_mode=telegram.ParseMode.MARKDOWN)

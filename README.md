@@ -1,6 +1,6 @@
 # Music bot & scraper
 
-This project includes 3 Docker containers: MySQL database, Telegram bot which offers you random album from the latest Pitchfork reviews or random album from Pitchfork's "50 best of 2018" albums and a scraper.
+This project includes 3 Docker containers: MySQL database, Telegram bot which offers you various reviews from Pitchfork  and a scraper.
 
 Running version is available at @zahessi_music_bot in Telegram.
 
@@ -25,7 +25,7 @@ Considering you are in the root directory of the project and the Docker service 
 docker-compose up
 ```
 
-After this command bot, scraper and the database services are running. You can access the data via `/help`, `/latest_albums` and `/album50` commands. Once an hour the scraping job is done to retrieve new records and write them into the database.
+After this command bot, scraper and the database services are running. You can access the data via commands listed in `/help` command. Once an hour the scraping job is done to retrieve new records and write them into the database.
 
 ## Built With
 
