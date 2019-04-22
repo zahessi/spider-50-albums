@@ -74,7 +74,9 @@ DB_CONFIG = {
     "port": 3306,
     "user": "root",
     "password": "root",
-    "database": "music_bot"}
+    "database": "music_bot",
+    "use_unicode": True,
+    "charset": "utf8"}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
